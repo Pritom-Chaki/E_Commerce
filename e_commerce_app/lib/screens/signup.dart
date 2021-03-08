@@ -27,17 +27,106 @@ void validation() {
 }
 
 class _SignUpState extends State<SignUp> {
+  Widget _buildAllTextFormField() {
+    return Container(
+      height: 300,
+      child: Column(
+        children: <Widget>[
+          NormalTextFormField(
+            hintText: "UserName",
+            obserText: false,
+            validator: (value) {
+              if (value == "") {
+                return "Please fill UserName";
+              } else if (value.length < 6) {
+                return "UserName is too short";
+              }
+              return "";
+            },
+          ),
+          NormalTextFormField(
+            hintText: "Email",
+            obserText: false,
+            validator: (value) {
+              if (value == "") {
+                return "Please fill Email";
+              } else if (!regExp.hasMatch(value)) {
+                return "Email is invalid";
+              }
+              return "";
+            },
+          ),
+          PasswordTextField(
+            hintText: "Password",
+            obserText: obserText,
+            onTap: () {
+              setState(() {
+                obserText = !obserText;
+              });
+            },
+            validator: (value) {
+              if (value == "") {
+                return "Please fill Password";
+              } else if (value.length < 8) {
+                return "Password is too short";
+              }
+              return "";
+            },
+          ),
+          NormalTextFormField(
+            hintText: "Phone Number",
+            obserText: false,
+            validator: (value) {
+              if (value == "") {
+                return "Please fill Phone Number";
+              } else if (value.length < 11) {
+                return "Phone Number must be 11";
+              }
+              return "";
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomPart() {
+    return Container(
+      height: 400,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _buildAllTextFormField(),
+          MyButton(
+              btnName: "Register",
+              onPressed: validation,
+              btnColor: Colors.pinkAccent),
+          ChangScreen(
+            whichAccount: "Already have account! ",
+            title: "SignIn",
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (ctx) => Login()));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Form(
             key: _formKey,
             child: Container(
               child: Column(
-                children: [
+                children: <Widget>[
                   Container(
                     height: 200,
                     width: double.infinity,
@@ -56,82 +145,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 400,
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        NormalTextFormField(
-                          hintText: "UserName",
-                          obserText: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Please fill UserName";
-                            } else if (value.length < 6) {
-                              return "UserName is too short";
-                            }
-                            return "";
-                          },
-                        ),
-                        NormalTextFormField(
-                          hintText: "Email",
-                          obserText: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Please fill Email";
-                            } else if (!regExp.hasMatch(value)) {
-                              return "Email is invalid";
-                            }
-                            return "";
-                          },
-                        ),
-                        PasswordTextField(
-                          hintText: "Password",
-                          obserText: true,
-                          onTap: () {
-                            setState(() {
-                              obserText = !obserText;
-                            });
-                            FocusScope.of(context).unfocus();
-                          },
-                          validator: (value) {
-                            if (value == "") {
-                              return "Please fill Password";
-                            } else if (value.length < 8) {
-                              return "Password is too Short ";
-                            }
-                            return "";
-                          },
-                        ),
-                        NormalTextFormField(
-                          hintText: "Phone Number",
-                          obserText: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Please fill Phone Number";
-                            } else if (value.length < 11) {
-                              return "Phone Number must be 11";
-                            }
-                            return "";
-                          },
-                        ),
-                        MyButton(
-                            btnName: "Register",
-                            onPressed: validation,
-                            btnColor: Colors.pinkAccent),
-                        ChangScreen(
-                          whichAccount: "Already have account! ",
-                          title: "SignIn",
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (ctx) => Login()));
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  _buildBottomPart(),
                 ],
               ),
             ),

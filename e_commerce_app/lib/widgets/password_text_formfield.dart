@@ -17,7 +17,7 @@ class PasswordTextField extends StatelessWidget {
       obscureText: obserText,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        hintText: "Password",
+        hintText: hintText,
         suffixIcon: GestureDetector(
           onTap: onTap,
           child:

@@ -63,7 +63,7 @@ class _LoginState extends State<Login> {
                     ),
                     PasswordTextField(
                       hintText: "Password",
-                      obserText: true,
+                      obserText: obserText,
                       onTap: () {
                         setState(() {
                           obserText = !obserText;
