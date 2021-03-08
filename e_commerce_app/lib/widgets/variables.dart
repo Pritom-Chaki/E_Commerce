@@ -8,5 +8,5 @@ TextStyle myStyle(double size, [Color color, FontWeight fw = FontWeight.w700]) {
 TextStyle hintTextStyle(
     [double size, Color color, FontWeight fw = FontWeight.w700]) {
   return GoogleFonts.montserrat(
-      fontSize: 20.0, color: Colors.black, fontWeight: fw);
+      fontSize: 16.0, color: Colors.black, fontWeight: fw);
 }

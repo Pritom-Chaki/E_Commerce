@@ -1,4 +1,8 @@
-import 'package:e_commerce_app/variables.dart';
+import 'package:e_commerce_app/screens/login.dart';
+import 'package:e_commerce_app/widgets/change_screen.dart';
+import 'package:e_commerce_app/widgets/normal_text_form_field.dart';
+import 'package:e_commerce_app/widgets/password_text_formfield.dart';
+import 'package:e_commerce_app/widgets/my_button.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -11,123 +15,125 @@ String p =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
 RegExp regExp = new RegExp(p);
+bool obserText = true;
+
+void validation() {
+  final FormState _form = _formKey.currentState;
+  if (_form.validate()) {
+    print("yes");
+  } else {
+    print("no");
+  }
+}
 
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  height: 250,
-                  width: double.infinity,
-                  // color: Colors.blue,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        "Register",
-                        style: TextStyle(
-                            fontSize: 50, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 400,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      TextFormField(
-                        validator: (value) {
-                          if (value.length < 6) {
-                            return "UserName is too short";
-                          } else if (value == "") {
-                            return "Please fill UserName";
-                          }
-                          return "";
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Username",
-                          hintStyle: hintTextStyle(),
-                          border: OutlineInputBorder(),
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Form(
+            key: _formKey,
+            child: Container(
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    // color: Colors.blue,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Register",
+                          style: TextStyle(
+                              fontSize: 50, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == "") {
-                            return "Please fill Email";
-                          } else if (!regExp.hasMatch(value)) {
-                            return "Email is invalid";
-                          }
-                          return "";
-                        },
-                        decoration: InputDecoration(
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 400,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        NormalTextFormField(
+                          hintText: "UserName",
+                          obserText: false,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please fill UserName";
+                            } else if (value.length < 6) {
+                              return "UserName is too short";
+                            }
+                            return "";
+                          },
+                        ),
+                        NormalTextFormField(
                           hintText: "Email",
-                          hintStyle: hintTextStyle(),
-                          border: OutlineInputBorder(),
+                          obserText: false,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please fill Email";
+                            } else if (!regExp.hasMatch(value)) {
+                              return "Email is invalid";
+                            }
+                            return "";
+                          },
                         ),
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
+                        PasswordTextField(
                           hintText: "Password",
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                            },
-                            child: Icon(
-                              Icons.visibility,
-                              color: Colors.black,
-                            ),
-                          ),
-                          hintStyle: hintTextStyle(),
-                          border: OutlineInputBorder(),
+                          obserText: true,
+                          onTap: () {
+                            setState(() {
+                              obserText = !obserText;
+                            });
+                            FocusScope.of(context).unfocus();
+                          },
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please fill Password";
+                            } else if (value.length < 8) {
+                              return "Password is too Short ";
+                            }
+                            return "";
+                          },
                         ),
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
+                        NormalTextFormField(
                           hintText: "Phone Number",
-                          // icon: Icon.,
-                          hintStyle: hintTextStyle(),
-                          border: OutlineInputBorder(),
+                          obserText: false,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please fill Phone Number";
+                            } else if (value.length < 11) {
+                              return "Phone Number must be 11";
+                            }
+                            return "";
+                          },
                         ),
-                      ),
-                      Container(
-                        height: 45,
-                        width: double.infinity,
-                        // ignore: deprecated_member_use
-                        child: RaisedButton(
-                            child: Text("Register"),
-                            color: Colors.blueGrey,
-                            onPressed: () {}),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text("I have already an account!"),
-                          GestureDetector(
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: Colors.cyan,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                        MyButton(
+                            btnName: "Register",
+                            onPressed: validation,
+                            btnColor: Colors.pinkAccent),
+                        ChangScreen(
+                          whichAccount: "Already have account! ",
+                          title: "SignIn",
+                          onTap: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (ctx) => Login()));
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
