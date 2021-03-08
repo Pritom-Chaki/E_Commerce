@@ -6,13 +6,19 @@ class PasswordTextField extends StatelessWidget {
   final Function validator;
   final String hintText;
   final Function onTap;
+  final Function onChanged;
 
   PasswordTextField(
-      {this.obserText, this.validator, this.hintText, this.onTap});
+      {this.obserText,
+      this.validator,
+      this.onChanged,
+      this.hintText,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       validator: validator,
       obscureText: obserText,
       decoration: InputDecoration(
