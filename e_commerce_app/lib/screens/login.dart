@@ -3,7 +3,9 @@ import 'package:e_commerce_app/widgets/change_screen.dart';
 import 'package:e_commerce_app/widgets/normal_text_form_field.dart';
 import 'package:e_commerce_app/widgets/password_text_formfield.dart';
 import 'package:e_commerce_app/widgets/my_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,18 +13,31 @@ class Login extends StatefulWidget {
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 String p =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
 RegExp regExp = new RegExp(p);
 bool obserText = true;
-void validation() {
+String email;
+String password;
+
+void validation() async {
   final FormState _form = _formKey.currentState;
 
-  if (_form.validate()) {
-    print("Yes");
+  if (!_form.validate()) {
+    try {
+      AuthResult result = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      print(result.user.uid);
+    } on PlatformException catch (e) {
+      print(e.message.toString());
+      _scaffoldKey.currentState
+          // ignore: deprecated_member_use
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
   } else {
-    print("No");
+    print("no");
   }
 }
 
@@ -54,9 +69,9 @@ class _LoginState extends State<Login> {
                       obserText: false,
                       validator: (value) {
                         if (value == "") {
-                          return "Please fill Password";
-                        } else if (value.length < 8) {
-                          return "Password is too short";
+                          return "Please fill Email";
+                        } else if (!regExp.hasMatch(value)) {
+                          return "Email is invalid";
                         }
                         return "";
                       },
