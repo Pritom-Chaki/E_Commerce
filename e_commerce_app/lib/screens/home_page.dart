@@ -1,41 +1,12 @@
+import 'package:carousel_pro/carousel_pro.dart';
+import 'package:e_commerce_app/screens/single_product.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
 
+import 'list_product.dart';
+
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  Widget _buildFeatureProduct(
-      String productName, double productPrice, String productImage) {
-    return Card(
-      child: Container(
-        height: 200,
-        width: 150,
-        // color: Colors.red,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 160,
-              width: 120,
-              decoration: BoxDecoration(
-                //  color: Colors.grey,
-                image: DecorationImage(
-                  image: AssetImage("assets/images/$productImage"),
-                ),
-              ),
-            ),
-            Text(
-              "\$ $productPrice",
-              style: priceTextStyle(),
-            ),
-            Text(
-              "$productName",
-              style: productTitleTextStyle(),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _buildCategories({String categoriesImage, int circleColor}) {
     return CircleAvatar(
@@ -51,7 +22,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildNewAndFeaProduct() {
+  Widget _buildNewAndFeaProduct({String titleHeader}) {
     return Column(
       children: [
         Container(
@@ -61,7 +32,7 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "New Arrives",
+                titleHeader,
                 style: homeHeadTextStyle(),
               ),
               Text(
@@ -78,9 +49,16 @@ class HomePage extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    _buildFeatureProduct("Men Shoe", 55.0, "shoeman.png"),
-                    _buildFeatureProduct("Women Shoe", 50.0, "shoewoman.png"),
-                    //   _buildFeatureProduct("Women Ring", 100.0, "ring.png"),
+                    SingleProduct(
+                      productImage: "shoeman.png",
+                      productName: "Men Shoe",
+                      productPrice: 55.0,
+                    ),
+                    SingleProduct(
+                      productImage: "shoewoman.png",
+                      productName: "Women Shoe",
+                      productPrice: 55.0,
+                    ),
                   ],
                 )
               ],
@@ -113,13 +91,13 @@ class HomePage extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.notifications_none, color: Colors.black),
-              onPressed: () {}),
-          IconButton(
               icon: Icon(
-                Icons.send,
+                Icons.search,
                 color: Colors.black,
               ),
+              onPressed: () {}),
+          IconButton(
+              icon: Icon(Icons.notifications_none, color: Colors.black),
               onPressed: () {}),
         ],
       ),
@@ -132,26 +110,38 @@ class HomePage extends StatelessWidget {
             Column(
               children: <Widget>[
                 Container(
-                  height: 120,
+                  height: 200,
+                  //color: Colors.red,
+                  child: Carousel(
+                    //dotColor: Colors.white,
+
+                    //dotBgColor: Colors.grey[100],
+                    //   dotSpacing: 20.0,
+                    // dotIncreaseSize: 4,
+                    //dotIncreasedColor: Colors.blue,
+                    // dotSize: 2,
+                    showIndicator: false,
+                    autoplay: true,
+
+                    images: [
+                      AssetImage("assets/images/ring.png"),
+                      AssetImage("assets/images/headphones.png"),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
                   width: double.infinity,
                   //color: Colors.blue,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          hintText: "Search Something",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                      ),
                       Container(
-                        height: 50,
+                        height: 30,
                         width: double.infinity,
+                        //color: Colors.red,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,12 +151,60 @@ class HomePage extends StatelessWidget {
                                   style: homeHeadTextStyle(),
                                 ),
                                 Text(
-                                  "See All",
+                                  "View More",
                                   style: homeHeadTextStyle(),
                                 )
                               ],
                             ),
                           ],
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        // color: Colors.green,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildCategories(
+                                  categoriesImage: "headphones.png",
+                                  circleColor: 0xff33dcfd),
+                              _buildCategories(
+                                  categoriesImage: "ring.png",
+                                  circleColor: 0xff338cdd),
+                              _buildCategories(
+                                  categoriesImage: "shoeman.png",
+                                  circleColor: 0xff4ff2af),
+                              _buildCategories(
+                                  categoriesImage: "bag.png",
+                                  circleColor: 0xff33dcfd),
+                            ]),
+                      ),
+                    ],
+                  ),
+                ),
+
+                //
+                Container(
+                  height: 70,
+                  // color: Colors.yellow,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "New Collection",
+                        style: homeHeadTextStyle(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (ctx) => ListProduct(
+                                        productTitle: "New Collection",
+                                      )));
+                        },
+                        child: Text(
+                          "View More",
+                          style: homeHeadTextStyle(),
                         ),
                       ),
                     ],
@@ -179,57 +217,26 @@ class HomePage extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            _buildFeatureProduct("DJ Cap", 15.0, "cap.png"),
-                            _buildFeatureProduct(
-                                "Man Jeans", 40.0, "jeans.png"),
-                            //   _buildFeatureProduct("Women Ring", 100.0, "ring.png"),
+                            SingleProduct(
+                              productImage: "shoeman.png",
+                              productName: "Men Shoe",
+                              productPrice: 55.0,
+                            ),
+                            SingleProduct(
+                              productImage: "shoewoman.png",
+                              productName: "Women Shoe",
+                              productPrice: 55.0,
+                            ),
                           ],
                         )
                       ],
                     ),
                   ],
                 ),
+                //
                 Container(
                   height: 70,
-                  //color: Colors.red,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Categories",
-                        style: homeHeadTextStyle(),
-                      ),
-                      Text(
-                        "See All",
-                        style: homeHeadTextStyle(),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  //color: Colors.blue,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildCategories(
-                            categoriesImage: "headphones.png",
-                            circleColor: 0xff33dcfd),
-                        _buildCategories(
-                            categoriesImage: "ring.png",
-                            circleColor: 0xff338cdd),
-                        _buildCategories(
-                            categoriesImage: "shoeman.png",
-                            circleColor: 0xff4ff2af),
-                        _buildCategories(
-                            categoriesImage: "bag.png",
-                            circleColor: 0xff33dcfd),
-                      ]),
-                ),
-                _buildNewAndFeaProduct(),
-                Container(
-                  height: 70,
-                  //color: Colors.green,
+                  // color: Colors.yellow,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -237,9 +244,18 @@ class HomePage extends StatelessWidget {
                         "Featured",
                         style: homeHeadTextStyle(),
                       ),
-                      Text(
-                        "See All",
-                        style: homeHeadTextStyle(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (ctx) => ListProduct(
+                                        productTitle: "New Collection",
+                                      )));
+                        },
+                        child: Text(
+                          "View More",
+                          style: homeHeadTextStyle(),
+                        ),
                       ),
                     ],
                   ),
@@ -251,10 +267,66 @@ class HomePage extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            _buildFeatureProduct("Ladies Bag", 30.0, "bag.png"),
-                            _buildFeatureProduct(
-                                "Engajment Ring", 150.0, "ring.png"),
-                            //   _buildFeatureProduct("Women Ring", 100.0, "ring.png"),
+                            SingleProduct(
+                              productImage: "ring.png",
+                              productName: "Engajded Ring",
+                              productPrice: 555.0,
+                            ),
+                            SingleProduct(
+                              productImage: "bag.png",
+                              productName: "Women Side Bag",
+                              productPrice: 40.0,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                //
+                Container(
+                  height: 70,
+                  // color: Colors.yellow,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Your Style",
+                        style: homeHeadTextStyle(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (ctx) => ListProduct(
+                                        productTitle: "Your Style",
+                                      )));
+                        },
+                        child: Text(
+                          "View More",
+                          style: homeHeadTextStyle(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            SingleProduct(
+                              productImage: "cap.png",
+                              productName: "DJ Cap",
+                              productPrice: 15.0,
+                            ),
+                            SingleProduct(
+                              productImage: "jeans.png",
+                              productName: "Man Jeans",
+                              productPrice: 50.0,
+                            ),
                           ],
                         )
                       ],
