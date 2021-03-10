@@ -10,3 +10,21 @@ TextStyle hintTextStyle(
   return GoogleFonts.montserrat(
       fontSize: 16.0, color: Colors.black, fontWeight: fw);
 }
+
+TextStyle homeHeadTextStyle(
+    [double size, Color color, FontWeight fw = FontWeight.w500]) {
+  return GoogleFonts.montserrat(
+      fontSize: 17.0, color: Colors.black, fontWeight: fw);
+}
+
+TextStyle priceTextStyle(
+    [double size, Color color, FontWeight fw = FontWeight.w500]) {
+  return GoogleFonts.montserrat(
+      fontSize: 16.0, color: Color(0xff9b96d6), fontWeight: fw);
+}
+
+TextStyle productTitleTextStyle(
+    [double size, Color color, FontWeight fw = FontWeight.w500]) {
+  return GoogleFonts.montserrat(
+      fontSize: 16.0, color: Colors.black, fontWeight: fw);
+}

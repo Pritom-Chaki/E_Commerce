@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/screens/login.dart';
+import 'package:e_commerce_app/screens/home_page.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,10 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
-        ),
-        body: Login(),
+        body: HomePage(),
       ),
     );
   }

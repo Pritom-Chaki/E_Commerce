@@ -66,6 +66,11 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 10),
                     NormalTextFormField(
                       hintText: "Email",
+                      onChanged: (value) {
+                        setState(() {
+                          email = value;
+                        });
+                      },
                       obserText: false,
                       validator: (value) {
                         if (value == "") {
@@ -78,6 +83,11 @@ class _LoginState extends State<Login> {
                     ),
                     PasswordTextField(
                       hintText: "Password",
+                      onChanged: (value) {
+                        setState(() {
+                          password = value;
+                        });
+                      },
                       obserText: obserText,
                       onTap: () {
                         setState(() {
