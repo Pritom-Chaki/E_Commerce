@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/details_screen.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
 import 'package:e_commerce_app/screens/list_product.dart';
 
@@ -9,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       home: Scaffold(
         body: HomePage(),

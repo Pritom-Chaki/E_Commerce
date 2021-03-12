@@ -28,3 +28,9 @@ TextStyle productTitleTextStyle(
   return GoogleFonts.montserrat(
       fontSize: 16.0, color: Colors.black, fontWeight: fw);
 }
+
+TextStyle productHeadTextStyle(
+    [double size, Color color, FontWeight fw = FontWeight.w500]) {
+  return GoogleFonts.montserrat(
+      fontSize: 18.0, color: Colors.black, fontWeight: fw);
+}
