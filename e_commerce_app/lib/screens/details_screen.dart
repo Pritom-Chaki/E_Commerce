@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/cart_screen.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
@@ -221,7 +222,14 @@ class _DetailScreenState extends State<DetailScreen> {
       child: RaisedButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: Colors.pinkAccent,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (ctx) => CartScreen(
+                    productImage: widget.productImage,
+                    productName: widget.productName,
+                    productPrice: widget.productPrice,
+                  )));
+        },
         child: Text(
           "Check Out",
           style: productHeadTextStyle(),
