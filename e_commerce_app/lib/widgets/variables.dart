@@ -34,3 +34,9 @@ TextStyle productHeadTextStyle(
   return GoogleFonts.montserrat(
       fontSize: 18.0, color: Colors.black, fontWeight: fw);
 }
+
+TextStyle welcomeTextStyle(
+    [double size, Color color, FontWeight fw = FontWeight.bold]) {
+  return GoogleFonts.montserrat(
+      fontSize: 35.0, color: Colors.black, fontWeight: fw);
+}

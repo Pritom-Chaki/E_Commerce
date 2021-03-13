@@ -3,6 +3,7 @@ import 'package:e_commerce_app/screens/checkout_screen.dart';
 import 'package:e_commerce_app/screens/details_screen.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
 import 'package:e_commerce_app/screens/list_product.dart';
+import 'package:e_commerce_app/screens/welcome_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       home: Scaffold(
-        body: HomePage(),
+        body: WelcomePage(),
       ),
     );
   }
