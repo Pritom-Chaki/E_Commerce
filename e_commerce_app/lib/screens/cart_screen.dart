@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/checkout_screen.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
 
@@ -106,7 +107,14 @@ class _CartScreenState extends State<CartScreen> {
           //  width: 100,
           // color: Colors.red,
           child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (ctx) => CheckOut(
+                        productImage: widget.productImage,
+                        productName: widget.productName,
+                        productPrice: widget.productPrice,
+                      )));
+            },
             color: Colors.indigo[300],
             child: Text(
               "Continous",

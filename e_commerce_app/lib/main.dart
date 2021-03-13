@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       home: Scaffold(
-        body: CheckOut(),
+        body: HomePage(),
       ),
     );
   }
