@@ -7,16 +7,19 @@ import 'package:flutter/material.dart';
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: Container(
-          // color: Colors.red,
+          height: screenHeight,
+          width: screenWidth,
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 350,
+                height: screenHeight / 2,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   //  color: Colors.yellow,
@@ -30,7 +33,7 @@ class WelcomePage extends StatelessWidget {
                 style: welcomeTextStyle(),
               ),
               Container(
-                height: 60,
+                height: screenHeight / 12,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,8 +50,8 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 45,
-                width: 265,
+                height: screenHeight / 18,
+                width: screenWidth / 2,
                 // color: Colors.blue,
                 child: RaisedButton(
                     shape: RoundedRectangleBorder(
