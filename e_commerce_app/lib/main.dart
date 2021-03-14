@@ -3,7 +3,9 @@ import 'package:e_commerce_app/screens/checkout_screen.dart';
 import 'package:e_commerce_app/screens/details_screen.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
 import 'package:e_commerce_app/screens/list_product.dart';
+import 'package:e_commerce_app/screens/login.dart';
 import 'package:e_commerce_app/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       home: Scaffold(
-        body: WelcomePage(),
+        body: StreamBuilder(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (context, snapShot) {
+              if (snapShot.hasData) {
+                return HomePage();
+              } else {
+                return Login();
+              }
+            }),
       ),
     );
   }

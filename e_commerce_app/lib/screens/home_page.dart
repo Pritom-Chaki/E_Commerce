@@ -1,9 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/screens/details_screen.dart';
 import 'package:e_commerce_app/screens/single_product.dart';
 import 'package:e_commerce_app/widgets/drawer.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
+import '../model/product.dart';
 
 import 'list_product.dart';
 
@@ -323,25 +325,39 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {}),
         ],
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 15),
-        child: ListView(
-          children: [
-            _buildSliding(),
-            SizedBox(
-              height: 10,
+      body: FutureBuilder(
+        future: Firestore.instance
+            .collection("products")
+            .document("Sfe9DxXILSU4NYAEl4Vj")
+            .collection("featureproduct")
+            .getDocuments(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: ListView(
+              children: [
+                _buildSliding(),
+                SizedBox(
+                  height: 10,
+                ),
+                _buildCategoriesFeature(),
+                SizedBox(
+                  height: 10,
+                ),
+                _buildNewCollection(),
+                _buildFeatureCollection(),
+                _buildYourSyleCollection(),
+              ],
             ),
-            _buildCategoriesFeature(),
-            SizedBox(
-              height: 10,
-            ),
-            _buildNewCollection(),
-            _buildFeatureCollection(),
-            _buildYourSyleCollection(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
