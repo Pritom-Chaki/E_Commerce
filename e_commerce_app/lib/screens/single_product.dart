@@ -36,7 +36,7 @@ class SingleProduct extends StatelessWidget {
                 decoration: BoxDecoration(
                   //  color: Colors.grey,
                   image: DecorationImage(
-                    image: AssetImage("assets/images/$productImage"),
+                    image: NetworkImage(productImage),
                   ),
                 ),
               ),

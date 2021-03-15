@@ -14,6 +14,14 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+Product manData;
+Product womanData;
+Product monitorData;
+Product laptopData;
+
+var fetureSnapShot;
+var newArriveSnapShot;
+
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -133,6 +141,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (ctx) => ListProduct(
                             productTitle: "New Collection",
+                            snapShot: newArriveSnapShot,
                           )));
                 },
                 child: Text(
@@ -150,28 +159,15 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (ctx) => DetailScreen(
-                              productImage: "shoeman.png",
-                              productName: "Men Shoe",
-                              productPrice: 55.0,
-                            ),
-                          ),
-                        );
-                      },
-                      child: SingleProduct(
-                        productImage: "shoeman.png",
-                        productName: "Men Shoe",
-                        productPrice: 55.0,
-                      ),
+                    SingleProduct(
+                      productImage: monitorData.image,
+                      productName: monitorData.name,
+                      productPrice: monitorData.price,
                     ),
                     SingleProduct(
-                      productImage: "shoewoman.png",
-                      productName: "Women Shoe",
-                      productPrice: 55.0,
+                      productImage: laptopData.image,
+                      productName: laptopData.name,
+                      productPrice: laptopData.price,
                     ),
                   ],
                 )
@@ -201,6 +197,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (ctx) => ListProduct(
                             productTitle: "New Collection",
+                            snapShot: fetureSnapShot,
                           )));
                 },
                 child: Text(
@@ -219,14 +216,14 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: <Widget>[
                     SingleProduct(
-                      productImage: "ring.png",
-                      productName: "Engajded Ring",
-                      productPrice: 555.0,
+                      productImage: womanData.image,
+                      productName: womanData.name,
+                      productPrice: womanData.price,
                     ),
                     SingleProduct(
-                      productImage: "bag.png",
-                      productName: "Women Side Bag",
-                      productPrice: 40.0,
+                      productImage: manData.image,
+                      productName: manData.name,
+                      productPrice: manData.price,
                     ),
                   ],
                 )
@@ -327,36 +324,83 @@ class _HomePageState extends State<HomePage> {
       ),
       body: FutureBuilder(
         future: Firestore.instance
-            .collection("products")
+            .collection("product")
             .document("Sfe9DxXILSU4NYAEl4Vj")
             .collection("featureproduct")
             .getDocuments(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.data == null) {
+            print("******Null******");
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 15),
-            child: ListView(
-              children: [
-                _buildSliding(),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildCategoriesFeature(),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildNewCollection(),
-                _buildFeatureCollection(),
-                _buildYourSyleCollection(),
-              ],
-            ),
-          );
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            print("*****Waiting*****");
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          fetureSnapShot = snapshot;
+          manData = Product(
+              image: snapshot.data.documents[0]["image"],
+              name: snapshot.data.documents[0]["name"],
+              price: snapshot.data.documents[0]["price"]);
+          womanData = Product(
+              image: snapshot.data.documents[1]["image"],
+              name: snapshot.data.documents[1]["name"],
+              price: snapshot.data.documents[1]["price"]);
+          // print(manData.name);
+          return FutureBuilder(
+              future: Firestore.instance
+                  .collection("product")
+                  .document("Sfe9DxXILSU4NYAEl4Vj")
+                  .collection("newacheive")
+                  .getDocuments(),
+              builder: (context, snapshot2) {
+                if (snapshot2.data == null) {
+                  print("******Null2******");
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot2.connectionState == ConnectionState.waiting) {
+                  print("*****Waiting2*****");
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                newArriveSnapShot = snapshot2;
+                monitorData = Product(
+                    image: snapshot2.data.documents[0]["image"],
+                    name: snapshot2.data.documents[0]["name"],
+                    price: snapshot2.data.documents[0]["price"]);
+                laptopData = Product(
+                    image: snapshot2.data.documents[1]["image"],
+                    name: snapshot2.data.documents[1]["name"],
+                    price: snapshot2.data.documents[1]["price"]);
+
+                return Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: ListView(
+                    children: [
+                      _buildSliding(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _buildCategoriesFeature(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _buildNewCollection(),
+                      _buildFeatureCollection(),
+                      _buildYourSyleCollection(),
+                    ],
+                  ),
+                );
+              });
         },
       ),
     );

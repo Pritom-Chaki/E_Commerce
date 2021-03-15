@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
   final String productTitle;
-  ListProduct({this.productTitle});
+  final snapShot;
+  ListProduct({this.productTitle, this.snapShot});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,48 +65,19 @@ class ListProduct extends StatelessWidget {
                   height: 10,
                 ),
                 Container(
-                  height: 700,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.75,
-                    children: [
-                      SingleProduct(
-                        productImage: "shoeman.png",
-                        productName: "Men Shoe",
-                        productPrice: 55.0,
-                      ),
-                      SingleProduct(
-                        productImage: "shoewoman.png",
-                        productName: "Woman Shoe",
-                        productPrice: 52.0,
-                      ),
-                      SingleProduct(
-                        productImage: "ring.png",
-                        productName: "Weeding Ring",
-                        productPrice: 555.0,
-                      ),
-                      SingleProduct(
-                        productImage: "jeans.png",
-                        productName: "Men Jeans",
-                        productPrice: 40.0,
-                      ),
-                      SingleProduct(
-                        productImage: "headphones.png",
-                        productName: "Gaming Headphones",
-                        productPrice: 199.0,
-                      ),
-                      SingleProduct(
-                        productImage: "cap.png",
-                        productName: "DJ Cap",
-                        productPrice: 15.0,
-                      ),
-                      SingleProduct(
-                        productImage: "bag.png",
-                        productName: "Women Side Bag",
-                        productPrice: 30.0,
-                      ),
-                    ],
+                  height: 1000,
+                  child: GridView.builder(
+                    itemCount: snapShot.data.documents.length,
+                    itemBuilder: (context, index) => SingleProduct(
+                      productName: snapShot.data.documents[index]["name"],
+                      productPrice: snapShot.data.documents[index]["price"],
+                      productImage: snapShot.data.documents[index]["image"],
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 10,
+                    ),
                   ),
                 ),
               ],

@@ -51,7 +51,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 // color: Colors.red,
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage("assets/images/${widget.productImage}"),
+                  image: NetworkImage(widget.productImage),
                 ),
               ),
             ),

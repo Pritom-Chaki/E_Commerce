@@ -15,19 +15,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/Home': (context) => HomePage(),
+        '/LogIn': (context) => Login(),
+      },
       debugShowCheckedModeBanner: false,
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        body: StreamBuilder(
-            stream: FirebaseAuth.instance.onAuthStateChanged,
-            builder: (context, snapShot) {
-              if (snapShot.hasData) {
-                return HomePage();
-              } else {
-                return Login();
-              }
-            }),
-      ),
+      title: 'Welcome to E-Com',
+      home: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (context, snapShot) {
+            if (snapShot.hasData) {
+              return HomePage();
+            } else {
+              return Login();
+            }
+          }),
     );
   }
 }

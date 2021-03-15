@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NavDrawer extends StatefulWidget {
@@ -84,7 +85,9 @@ class _NavDrawerState extends State<NavDrawer> {
         title: Text("Contact Us"),
       ),
       ListTile(
-        onTap: () {},
+        onTap: () {
+          FirebaseAuth.instance.signOut();
+        },
         leading: Icon(Icons.exit_to_app),
         title: Text("Logout"),
       ),
