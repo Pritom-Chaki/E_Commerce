@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       title: 'Welcome to E-Com',
       home: MultiProvider(
         providers: [
-          ListenableProvider<ProdcutProvider>(
-            create: (ctx) => ProdcutProvider(),
+          ListenableProvider<ProductProvider>(
+            create: (ctx) => ProductProvider(),
           ),
           ListenableProvider<CategoryProvider>(
             create: (ctx) => CategoryProvider(),

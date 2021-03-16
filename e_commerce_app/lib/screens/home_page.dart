@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/provider/category_provider.dart';
+import 'package:e_commerce_app/provider/product_provider.dart';
 import 'package:e_commerce_app/screens/details_screen.dart';
 import 'package:e_commerce_app/screens/single_product.dart';
 import 'package:e_commerce_app/widgets/drawer.dart';
@@ -16,21 +17,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-CategoryProvider provider;
+CategoryProvider categoryProvider;
+ProductProvider productProvider;
 
 Product manData;
 Product womanData;
 Product monitorData;
 Product laptopData;
-
-var tie;
-var shoes;
-var pant;
-var dress;
-var shirt;
-
-var fetureSnapShot;
-var newArriveSnapShot;
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -81,11 +74,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoriesFeature() {
-    List<Product> shirts = provider.getShirtList;
-    List<Product> dress = provider.getDressList;
-    List<Product> shoes = provider.getShoesList;
-    List<Product> pant = provider.getPantList;
-    List<Product> tie = provider.getTieList;
+    List<Product> shirts = categoryProvider.getShirtList;
+    List<Product> dress = categoryProvider.getDressList;
+    List<Product> shoes = categoryProvider.getShoesList;
+    List<Product> pant = categoryProvider.getPantList;
+    List<Product> tie = categoryProvider.getTieList;
     return Container(
       height: 100,
       width: double.infinity,
@@ -131,8 +124,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "headphones.png",
-                        circleColor: 0xff33dcfd),
+                        categoriesImage: "shirt.png", circleColor: 0xff33dcfd),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -143,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "ring.png", circleColor: 0xff338cdd),
+                        categoriesImage: "dress.png", circleColor: 0xff338cdd),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -154,8 +146,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "shoeman.png",
-                        circleColor: 0xff4ff2af),
+                        categoriesImage: "shoe.png", circleColor: 0xff4ff2af),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -166,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "bag.png", circleColor: 0xff33dcfd),
+                        categoriesImage: "pant.png", circleColor: 0xff33dcfd),
                   ),
                 ]),
           ),
@@ -176,6 +167,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildNewCollection() {
+    List<Product> newAcheivesCollection = productProvider.getNewAcheivesList;
     return Column(
       children: [
         Container(
@@ -193,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (ctx) => ListProduct(
                             productTitle: "New Collection",
-                            snapShot: newArriveSnapShot,
+                            snapShot: newAcheivesCollection,
                           )));
                 },
                 child: Text(
@@ -232,6 +224,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildFeatureCollection() {
+    List<Product> featureCollection = productProvider.getFeatureList;
     return Column(
       children: [
         Container(
@@ -246,10 +239,10 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => ListProduct(
                             productTitle: "New Collection",
-                            snapShot: fetureSnapShot,
+                            snapShot: featureCollection,
                           )));
                 },
                 child: Text(
@@ -344,12 +337,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of<CategoryProvider>(context);
-    provider.getShirtData();
-    provider.getDressData();
-    provider.getPantData();
-    provider.getShoesData();
-    provider.getTieData();
+    categoryProvider = Provider.of<CategoryProvider>(context);
+    categoryProvider.getShirtData();
+    categoryProvider.getDressData();
+    categoryProvider.getPantData();
+    categoryProvider.getShoesData();
+    categoryProvider.getTieData();
+
+    productProvider = Provider.of<ProductProvider>(context);
+    productProvider.getFeatureData();
+    productProvider.gnewAcheivesData();
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(),
@@ -380,103 +378,25 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {}),
         ],
       ),
-      body: FutureBuilder(
-        future: Firestore.instance
-            .collection("product")
-            .document("Sfe9DxXILSU4NYAEl4Vj")
-            .collection("featureproduct")
-            .getDocuments(),
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            print("******Null******");
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            print("*****Waiting*****");
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          fetureSnapShot = snapshot;
-          manData = Product(
-              image: snapshot.data.documents[0]["image"],
-              name: snapshot.data.documents[0]["name"],
-              price: snapshot.data.documents[0]["price"]);
-          womanData = Product(
-              image: snapshot.data.documents[1]["image"],
-              name: snapshot.data.documents[1]["name"],
-              price: snapshot.data.documents[1]["price"]);
-          // print(manData.name);
-          return FutureBuilder(
-              future: Firestore.instance
-                  .collection("category")
-                  .document("XDWXgXGC3vZZpAdNumIq")
-                  .collection("shirt")
-                  .getDocuments(),
-              builder: (context, shirtSnapShot) {
-                if (shirtSnapShot.data == null) {
-                  print("******Null555******");
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                shirt = shirtSnapShot;
-
-                return FutureBuilder(
-                    future: Firestore.instance
-                        .collection("product")
-                        .document("Sfe9DxXILSU4NYAEl4Vj")
-                        .collection("newacheive")
-                        .getDocuments(),
-                    builder: (context, snapshot2) {
-                      if (snapshot2.data == null) {
-                        print("******Null2******");
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot2.connectionState ==
-                          ConnectionState.waiting) {
-                        print("*****Waiting2*****");
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      newArriveSnapShot = snapshot2;
-                      monitorData = Product(
-                          image: snapshot2.data.documents[0]["image"],
-                          name: snapshot2.data.documents[0]["name"],
-                          price: snapshot2.data.documents[0]["price"]);
-                      laptopData = Product(
-                          image: snapshot2.data.documents[1]["image"],
-                          name: snapshot2.data.documents[1]["name"],
-                          price: snapshot2.data.documents[1]["price"]);
-
-                      return Container(
-                        height: double.infinity,
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        child: ListView(
-                          children: [
-                            _buildSliding(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            _buildCategoriesFeature(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            _buildNewCollection(),
-                            _buildFeatureCollection(),
-                            _buildYourSyleCollection(),
-                          ],
-                        ),
-                      );
-                    });
-              });
-        },
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        child: ListView(
+          children: [
+            _buildSliding(),
+            SizedBox(
+              height: 10,
+            ),
+            _buildCategoriesFeature(),
+            SizedBox(
+              height: 10,
+            ),
+            _buildNewCollection(),
+            _buildFeatureCollection(),
+            _buildYourSyleCollection(),
+          ],
+        ),
       ),
     );
   }
