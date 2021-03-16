@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/model/product.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
 import 'package:e_commerce_app/screens/single_product.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
   final String productTitle;
-  final snapShot;
+  final List<Product> snapShot;
   ListProduct({this.productTitle, this.snapShot});
   @override
   Widget build(BuildContext context) {
@@ -66,19 +67,19 @@ class ListProduct extends StatelessWidget {
                 ),
                 Container(
                   height: 1000,
-                  child: GridView.builder(
-                    itemCount: snapShot.data.documents.length,
-                    itemBuilder: (context, index) => SingleProduct(
-                      productName: snapShot.data.documents[index]["name"],
-                      productPrice: snapShot.data.documents[index]["price"],
-                      productImage: snapShot.data.documents[index]["image"],
-                    ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  child: GridView.count(
+                      //   physics: NeverScrollableScrollPhysics(),
                       crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                      crossAxisSpacing: 10,
-                    ),
-                  ),
+                      scrollDirection: Axis.vertical,
+                      children: snapShot
+                          .map(
+                            (e) => SingleProduct(
+                              productImage: e.image,
+                              productName: e.name,
+                              productPrice: e.price,
+                            ),
+                          )
+                          .toList()),
                 ),
               ],
             ),

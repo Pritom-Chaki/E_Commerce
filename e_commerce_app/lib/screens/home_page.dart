@@ -1,10 +1,12 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/provider/category_provider.dart';
 import 'package:e_commerce_app/screens/details_screen.dart';
 import 'package:e_commerce_app/screens/single_product.dart';
 import 'package:e_commerce_app/widgets/drawer.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../model/product.dart';
 
 import 'list_product.dart';
@@ -14,10 +16,18 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+CategoryProvider provider;
+
 Product manData;
 Product womanData;
 Product monitorData;
 Product laptopData;
+
+var tie;
+var shoes;
+var pant;
+var dress;
+var shirt;
 
 var fetureSnapShot;
 var newArriveSnapShot;
@@ -71,6 +81,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoriesFeature() {
+    List<Product> shirts = provider.getShirtList;
+    List<Product> dress = provider.getDressList;
+    List<Product> shoes = provider.getShoesList;
+    List<Product> pant = provider.getPantList;
+    List<Product> tie = provider.getTieList;
     return Container(
       height: 100,
       width: double.infinity,
@@ -89,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Featured",
+                      "Category",
                       style: homeHeadTextStyle(),
                     ),
                     Text(
@@ -107,15 +122,52 @@ class _HomePageState extends State<HomePage> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildCategories(
-                      categoriesImage: "headphones.png",
-                      circleColor: 0xff33dcfd),
-                  _buildCategories(
-                      categoriesImage: "ring.png", circleColor: 0xff338cdd),
-                  _buildCategories(
-                      categoriesImage: "shoeman.png", circleColor: 0xff4ff2af),
-                  _buildCategories(
-                      categoriesImage: "bag.png", circleColor: 0xff33dcfd),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => ListProduct(
+                                productTitle: "shirt",
+                                snapShot: shirts,
+                              )));
+                    },
+                    child: _buildCategories(
+                        categoriesImage: "headphones.png",
+                        circleColor: 0xff33dcfd),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => ListProduct(
+                                productTitle: "dress",
+                                snapShot: dress,
+                              )));
+                    },
+                    child: _buildCategories(
+                        categoriesImage: "ring.png", circleColor: 0xff338cdd),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => ListProduct(
+                                productTitle: "shoe",
+                                snapShot: shoes,
+                              )));
+                    },
+                    child: _buildCategories(
+                        categoriesImage: "shoeman.png",
+                        circleColor: 0xff4ff2af),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => ListProduct(
+                                productTitle: "Tie",
+                                snapShot: tie,
+                              )));
+                    },
+                    child: _buildCategories(
+                        categoriesImage: "bag.png", circleColor: 0xff33dcfd),
+                  ),
                 ]),
           ),
         ],
@@ -292,6 +344,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of<CategoryProvider>(context);
+    provider.getShirtData();
+    provider.getDressData();
+    provider.getPantData();
+    provider.getShoesData();
+    provider.getTieData();
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavDrawer(),
@@ -353,53 +411,70 @@ class _HomePageState extends State<HomePage> {
           // print(manData.name);
           return FutureBuilder(
               future: Firestore.instance
-                  .collection("product")
-                  .document("Sfe9DxXILSU4NYAEl4Vj")
-                  .collection("newacheive")
+                  .collection("category")
+                  .document("XDWXgXGC3vZZpAdNumIq")
+                  .collection("shirt")
                   .getDocuments(),
-              builder: (context, snapshot2) {
-                if (snapshot2.data == null) {
-                  print("******Null2******");
+              builder: (context, shirtSnapShot) {
+                if (shirtSnapShot.data == null) {
+                  print("******Null555******");
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (snapshot2.connectionState == ConnectionState.waiting) {
-                  print("*****Waiting2*****");
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                newArriveSnapShot = snapshot2;
-                monitorData = Product(
-                    image: snapshot2.data.documents[0]["image"],
-                    name: snapshot2.data.documents[0]["name"],
-                    price: snapshot2.data.documents[0]["price"]);
-                laptopData = Product(
-                    image: snapshot2.data.documents[1]["image"],
-                    name: snapshot2.data.documents[1]["name"],
-                    price: snapshot2.data.documents[1]["price"]);
 
-                return Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 15),
-                  child: ListView(
-                    children: [
-                      _buildSliding(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      _buildCategoriesFeature(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      _buildNewCollection(),
-                      _buildFeatureCollection(),
-                      _buildYourSyleCollection(),
-                    ],
-                  ),
-                );
+                shirt = shirtSnapShot;
+                return FutureBuilder(
+                    future: Firestore.instance
+                        .collection("product")
+                        .document("Sfe9DxXILSU4NYAEl4Vj")
+                        .collection("newacheive")
+                        .getDocuments(),
+                    builder: (context, snapshot2) {
+                      if (snapshot2.data == null) {
+                        print("******Null2******");
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot2.connectionState ==
+                          ConnectionState.waiting) {
+                        print("*****Waiting2*****");
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      newArriveSnapShot = snapshot2;
+                      monitorData = Product(
+                          image: snapshot2.data.documents[0]["image"],
+                          name: snapshot2.data.documents[0]["name"],
+                          price: snapshot2.data.documents[0]["price"]);
+                      laptopData = Product(
+                          image: snapshot2.data.documents[1]["image"],
+                          name: snapshot2.data.documents[1]["name"],
+                          price: snapshot2.data.documents[1]["price"]);
+
+                      return Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        child: ListView(
+                          children: [
+                            _buildSliding(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            _buildCategoriesFeature(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            _buildNewCollection(),
+                            _buildFeatureCollection(),
+                            _buildYourSyleCollection(),
+                          ],
+                        ),
+                      );
+                    });
               });
         },
       ),
