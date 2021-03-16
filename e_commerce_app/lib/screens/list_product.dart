@@ -14,16 +14,7 @@ class ListProduct extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (ctx) => HomePage()));
-          },
-        ),
+        iconTheme: IconThemeData(color: Colors.black),
         actions: [
           IconButton(
               icon: Icon(
@@ -66,11 +57,12 @@ class ListProduct extends StatelessWidget {
                   height: 10,
                 ),
                 Container(
-                  height: 1000,
+                  height: 700,
                   child: GridView.count(
-                      //   physics: NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       crossAxisCount: 2,
                       scrollDirection: Axis.vertical,
+                      childAspectRatio: 0.7,
                       children: snapShot
                           .map(
                             (e) => SingleProduct(

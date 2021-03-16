@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => ListProduct(
-                                productTitle: "shirt",
+                                productTitle: "Shirt",
                                 snapShot: shirts,
                               )));
                     },
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => ListProduct(
-                                productTitle: "dress",
+                                productTitle: "Dress",
                                 snapShot: dress,
                               )));
                     },
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => ListProduct(
-                                productTitle: "shoe",
+                                productTitle: "Shoes",
                                 snapShot: shoes,
                               )));
                     },
@@ -161,8 +161,8 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => ListProduct(
-                                productTitle: "Tie",
-                                snapShot: tie,
+                                productTitle: "pant",
+                                snapShot: pant,
                               )));
                     },
                     child: _buildCategories(
@@ -422,8 +422,8 @@ class _HomePageState extends State<HomePage> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
                 shirt = shirtSnapShot;
+
                 return FutureBuilder(
                     future: Firestore.instance
                         .collection("product")

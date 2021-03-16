@@ -19,7 +19,7 @@ class CategoryProvider with ChangeNotifier {
     List<Product> newList = [];
 
     QuerySnapshot shirtSnapShot = await Firestore.instance
-        .collection("catagory")
+        .collection("category")
         .document("XDWXgXGC3vZZpAdNumIq")
         .collection("shirt")
         .getDocuments();
@@ -43,7 +43,7 @@ class CategoryProvider with ChangeNotifier {
     List<Product> newList = [];
 
     QuerySnapshot dressSnapShot = await Firestore.instance
-        .collection("catagory")
+        .collection("category")
         .document("XDWXgXGC3vZZpAdNumIq")
         .collection("dress")
         .getDocuments();
@@ -67,7 +67,7 @@ class CategoryProvider with ChangeNotifier {
     List<Product> newList = [];
 
     QuerySnapshot shoeSnapShot = await Firestore.instance
-        .collection("catagory")
+        .collection("category")
         .document("XDWXgXGC3vZZpAdNumIq")
         .collection("shoe")
         .getDocuments();
@@ -91,13 +91,13 @@ class CategoryProvider with ChangeNotifier {
     List<Product> newList = [];
 
     QuerySnapshot pantSnapShot = await Firestore.instance
-        .collection("catagory")
+        .collection("category")
         .document("XDWXgXGC3vZZpAdNumIq")
         .collection("pant")
         .getDocuments();
     pantSnapShot.documents.forEach(
       (element) {
-        shoesData = Product(
+        pantData = Product(
             image: element.data["image"],
             name: element.data["name"],
             price: element.data["price"]);
@@ -115,7 +115,7 @@ class CategoryProvider with ChangeNotifier {
     List<Product> newList = [];
 
     QuerySnapshot tieSnapShot = await Firestore.instance
-        .collection("catagory")
+        .collection("category")
         .document("XDWXgXGC3vZZpAdNumIq")
         .collection("tie")
         .getDocuments();

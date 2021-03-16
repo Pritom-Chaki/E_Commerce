@@ -25,14 +25,14 @@ class SingleProduct extends StatelessWidget {
           );
         },
         child: Container(
-          height: 200,
+          height: 260,
           width: 150,
-          // color: Colors.red,
+          //color: Colors.red,
           child: Column(
             children: <Widget>[
               Container(
-                height: 160,
-                width: 120,
+                height: 140,
+                width: 140,
                 decoration: BoxDecoration(
                   //  color: Colors.grey,
                   image: DecorationImage(
@@ -44,9 +44,12 @@ class SingleProduct extends StatelessWidget {
                 "\$ ${productPrice.toString()}",
                 style: priceTextStyle(),
               ),
-              Text(
-                productName,
-                style: productTitleTextStyle(),
+              Container(
+                height: 50,
+                child: Text(
+                  productName,
+                  style: productTitleTextStyle(),
+                ),
               )
             ],
           ),
