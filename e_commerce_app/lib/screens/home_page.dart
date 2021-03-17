@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "shirt.png", circleColor: 0xff33dcfd),
+                        categoriesImage: "shirt.png", circleColor: 0xffffffff),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "dress.png", circleColor: 0xff338cdd),
+                        categoriesImage: "dress.png", circleColor: 0xffffffff),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "shoe.png", circleColor: 0xff4ff2af),
+                        categoriesImage: "shoe.png", circleColor: 0xffffffff),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                               )));
                     },
                     child: _buildCategories(
-                        categoriesImage: "pant.png", circleColor: 0xff33dcfd),
+                        categoriesImage: "pant.png", circleColor: 0xffffffff),
                   ),
                 ]),
           ),
@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => ListProduct(
                             productTitle: "New Collection",
                             snapShot: newAcheivesCollection,
@@ -203,16 +203,21 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SingleProduct(
-                      productImage: monitorData.image,
-                      productName: monitorData.name,
-                      productPrice: monitorData.price,
+                    Container(
+                      height: 250,
+                      //  width: double.infinity,
+                      color: Colors.green,
                     ),
-                    SingleProduct(
-                      productImage: laptopData.image,
-                      productName: laptopData.name,
-                      productPrice: laptopData.price,
-                    ),
+                    // SingleProduct(
+                    //     productImage: monitorData.image,
+                    //     productName: monitorData.name,
+                    //      productPrice: monitorData.price,
+                    //     ),
+                    // SingleProduct(
+                    //       productImage: laptopData.image,
+                    //      productName: laptopData.name,
+                    //      productPrice: laptopData.price,
+                    //     ),
                   ],
                 )
               ],
@@ -241,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => ListProduct(
-                            productTitle: "New Collection",
+                            productTitle: "Feature Collection",
                             snapShot: featureCollection,
                           )));
                 },
@@ -260,16 +265,21 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SingleProduct(
-                      productImage: womanData.image,
-                      productName: womanData.name,
-                      productPrice: womanData.price,
+                    Container(
+                      height: 250,
+                      // width: double.infinity,
+                      color: Colors.red,
                     ),
-                    SingleProduct(
-                      productImage: manData.image,
-                      productName: manData.name,
-                      productPrice: manData.price,
-                    ),
+                    // SingleProduct(
+                    //     productImage: womanData.image,
+                    //     productName: womanData.name,
+                    //     productPrice: womanData.price,
+                    //     ),
+                    // SingleProduct(
+                    //     productImage: manData.image,
+                    //     productName: manData.name,
+                    //     productPrice: manData.price,
+                    //     ),
                   ],
                 )
               ],
@@ -315,16 +325,21 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    SingleProduct(
-                      productImage: "cap.png",
-                      productName: "DJ Cap",
-                      productPrice: 15.0,
+                    Container(
+                      height: 250,
+                      //  width: double.infinity,
+                      color: Colors.green,
                     ),
-                    SingleProduct(
-                      productImage: "jeans.png",
-                      productName: "Man Jeans",
-                      productPrice: 50.0,
-                    ),
+                    // SingleProduct(
+                    //   productImage: "cap.png",
+                    //   productName: "DJ Cap",
+                    //   productPrice: 15.0,
+                    // ),
+                    // SingleProduct(
+                    //   productImage: "jeans.png",
+                    //   productName: "Man Jeans",
+                    //   productPrice: 50.0,
+                    // ),
                   ],
                 )
               ],
