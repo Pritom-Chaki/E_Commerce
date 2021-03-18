@@ -1,7 +1,9 @@
+import 'package:e_commerce_app/provider/product_provider.dart';
 import 'package:e_commerce_app/screens/cart_screen.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final String productImage;
@@ -14,6 +16,8 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int count = 1;
+  ProductProvider productProvider;
+
   Widget _buildProductSize({String sizeTitle}) {
     return Container(
         height: 60,
@@ -223,12 +227,17 @@ class _DetailScreenState extends State<DetailScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: Colors.pinkAccent,
         onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (ctx) => CartScreen(
-                    productImage: widget.productImage,
-                    productName: widget.productName,
-                    productPrice: widget.productPrice,
-                  )));
+          productProvider.getCartData(
+            image: widget.productImage,
+            name: widget.productName,
+            price: widget.productPrice,
+            quentity: count,
+          );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (ctx) => CartScreen(),
+            ),
+          );
         },
         child: Text(
           "Check Out",
@@ -240,6 +249,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of<ProductProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(

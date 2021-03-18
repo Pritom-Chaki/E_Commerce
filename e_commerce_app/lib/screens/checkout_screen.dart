@@ -30,8 +30,7 @@ class _CheckOutState extends State<CheckOut> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: AssetImage(
-                              "assets/images/${widget.productImage}"))),
+                          image: NetworkImage(widget.productImage))),
                 ),
                 Container(
                   height: 130,
