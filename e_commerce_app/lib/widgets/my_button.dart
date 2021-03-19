@@ -12,7 +12,10 @@ class MyButton extends StatelessWidget {
       width: double.infinity,
       // ignore: deprecated_member_use
       child: RaisedButton(
-        child: Text(btnName),
+        child: Text(
+          btnName,
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
         color: btnColor,
         onPressed: onPressed,
       ),

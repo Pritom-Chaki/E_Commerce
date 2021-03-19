@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/provider/product_provider.dart';
 import 'package:e_commerce_app/screens/cart_screen.dart';
 import 'package:e_commerce_app/screens/home_page.dart';
+import 'package:e_commerce_app/widgets/my_button.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -221,11 +222,8 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildButton() {
     return Container(
       height: 60,
-      width: double.infinity,
-      // color: Colors.black,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: Colors.pinkAccent,
+      child: MyButton(
+        btnName: "CheckOut",
         onPressed: () {
           productProvider.getCartData(
             image: widget.productImage,
@@ -239,10 +237,6 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           );
         },
-        child: Text(
-          "Check Out",
-          style: productHeadTextStyle(),
-        ),
       ),
     );
   }

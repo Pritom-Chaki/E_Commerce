@@ -73,6 +73,7 @@ class _CartScreenState extends State<CartScreen> {
           productName: productProvider.getCardModelList[index].name,
           productPrice: productProvider.getCardModelList[index].price,
           productQuentity: productProvider.getCardModelList[index].quantity,
+          isCount: false,
         ),
       ),
     );

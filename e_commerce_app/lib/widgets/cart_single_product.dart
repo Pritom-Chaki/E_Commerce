@@ -5,22 +5,22 @@ class CartSingleProduct extends StatefulWidget {
   final double productPrice;
   final String productName;
   final String productImage;
-  final int productQuentity;
+  final bool isCount;
+  int productQuentity;
   CartSingleProduct(
       {this.productImage,
       this.productName,
       this.productPrice,
-      this.productQuentity});
+      this.productQuentity,
+      this.isCount});
   @override
   _CartSingleProductState createState() => _CartSingleProductState();
 }
 
-int count;
-
 class _CartSingleProductState extends State<CartSingleProduct> {
   @override
   Widget build(BuildContext context) {
-    count = widget.productQuentity;
+    // count = widget.productQuentity;
     return Container(
       height: 140,
       width: double.infinity,
@@ -59,7 +59,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                         ),
                         Container(
                           height: 30,
-                          width: 100,
+                          width: widget.isCount == false ? 120 : 80,
                           color: Color(0xfff2f2f2),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -68,21 +68,21 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                 child: Icon(Icons.remove),
                                 onTap: () {
                                   setState(() {
-                                    if (count > 1) {
-                                      count--;
+                                    if (widget.productQuentity > 1) {
+                                      widget.productQuentity--;
                                     }
                                   });
                                 },
                               ),
                               Text(
-                                count.toString(),
+                                widget.productQuentity.toString(),
                                 style: productHeadTextStyle(),
                               ),
                               GestureDetector(
                                 child: Icon(Icons.add),
                                 onTap: () {
                                   setState(() {
-                                    count++;
+                                    widget.productQuentity++;
                                   });
                                 },
                               ),
