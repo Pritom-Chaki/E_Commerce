@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/cart_screen.dart';
 import 'package:e_commerce_app/widgets/variables.dart';
 import 'package:flutter/material.dart';
 
@@ -75,7 +76,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                 },
                               ),
                               Text(
-                                widget.productQuentity.toString(),
+                                //   productProvider.getCount.toString(),
                                 style: productHeadTextStyle(),
                               ),
                               GestureDetector(
