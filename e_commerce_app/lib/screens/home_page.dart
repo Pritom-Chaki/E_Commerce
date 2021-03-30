@@ -203,21 +203,48 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Container(
-                      height: 250,
-                      //  width: double.infinity,
-                      color: Colors.green,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              productImage:
+                                  newAcheivesCollection.elementAt(0).image,
+                              productPrice:
+                                  newAcheivesCollection.elementAt(0).price,
+                              productName:
+                                  newAcheivesCollection.elementAt(0).name,
+                            ),
+                          ),
+                        );
+                      },
+                      child: SingleProduct(
+                        productImage: newAcheivesCollection.elementAt(0).image,
+                        productPrice: newAcheivesCollection.elementAt(0).price,
+                        productName: newAcheivesCollection.elementAt(0).name,
+                      ),
                     ),
-                    // SingleProduct(
-                    //     productImage: monitorData.image,
-                    //     productName: monitorData.name,
-                    //      productPrice: monitorData.price,
-                    //     ),
-                    // SingleProduct(
-                    //       productImage: laptopData.image,
-                    //      productName: laptopData.name,
-                    //      productPrice: laptopData.price,
-                    //     ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              productImage:
+                                  newAcheivesCollection.elementAt(1).image,
+                              productPrice:
+                                  newAcheivesCollection.elementAt(1).price,
+                              productName:
+                                  newAcheivesCollection.elementAt(1).name,
+                            ),
+                          ),
+                        );
+                      },
+                      child: SingleProduct(
+                        productImage: newAcheivesCollection.elementAt(1).image,
+                        productPrice: newAcheivesCollection.elementAt(1).price,
+                        productName: newAcheivesCollection.elementAt(1).name,
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -265,21 +292,46 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Container(
-                      height: 250,
-                      // width: double.infinity,
-                      color: Colors.red,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              productImage:
+                                  featureCollection.elementAt(0).image,
+                              productPrice:
+                                  featureCollection.elementAt(0).price,
+                              productName: featureCollection.elementAt(0).name,
+                            ),
+                          ),
+                        );
+                      },
+                      child: SingleProduct(
+                        productImage: featureCollection.elementAt(0).image,
+                        productPrice: featureCollection.elementAt(0).price,
+                        productName: featureCollection.elementAt(0).name,
+                      ),
                     ),
-                    // SingleProduct(
-                    //     productImage: womanData.image,
-                    //     productName: womanData.name,
-                    //     productPrice: womanData.price,
-                    //     ),
-                    // SingleProduct(
-                    //     productImage: manData.image,
-                    //     productName: manData.name,
-                    //     productPrice: manData.price,
-                    //     ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              productImage:
+                                  featureCollection.elementAt(1).image,
+                              productPrice:
+                                  featureCollection.elementAt(1).price,
+                              productName: featureCollection.elementAt(1).name,
+                            ),
+                          ),
+                        );
+                      },
+                      child: SingleProduct(
+                        productImage: featureCollection.elementAt(1).image,
+                        productPrice: featureCollection.elementAt(1).price,
+                        productName: featureCollection.elementAt(1).name,
+                      ),
+                    ),
                   ],
                 )
               ],

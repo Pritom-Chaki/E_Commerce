@@ -76,6 +76,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                 },
                               ),
                               Text(
+                                '',
                                 //   productProvider.getCount.toString(),
                                 style: productHeadTextStyle(),
                               ),
